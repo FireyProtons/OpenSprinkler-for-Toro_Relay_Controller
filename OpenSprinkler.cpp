@@ -769,12 +769,12 @@ void OpenSprinkler::begin() {
 
 	// Other ESP8266 boards are sometimes detected as OS 3.1 and sometimes as OS 3.2.
 	// To be safe these pins are re-assigned according V2 revision:
-	if (ESP12F_RELAY_X4) {
-		PIN_BUTTON_1 = V2_PIN_BUTTON_1;
-		PIN_BUTTON_2 = V2_PIN_BUTTON_2;
-		PIN_BUTTON_3 = V2_PIN_BUTTON_3;
-		PIN_RFTX     = V2_PIN_RFTX;
-	}
+	//if (ESP12F_RELAY_X4) {
+	//	PIN_BUTTON_1 = V2_PIN_BUTTON_1;
+	//	PIN_BUTTON_2 = V2_PIN_BUTTON_2;
+	//	PIN_BUTTON_3 = V2_PIN_BUTTON_3;
+	//	PIN_RFTX     = V2_PIN_RFTX;
+	//}
 
 	/* detect expanders */
 	for(byte i=0;i<(MAX_NUM_BOARDS)/2;i++)
@@ -929,16 +929,16 @@ void OpenSprinkler::begin() {
 
 	// set button pins
 	// enable internal pullup
-	if (ESP12F_RELAY_X4) {
-		// On ESP12F_Relay_X4 board the GPIO0 (button 2) has already a pullup resistor and GPIO15 (button 3) a pulldown:
-		pinMode(PIN_BUTTON_1, INPUT_PULLUP);
-		pinMode(PIN_BUTTON_2, INPUT);
-		pinMode(PIN_BUTTON_3, INPUT);
-	} else {
-		pinMode(PIN_BUTTON_1, INPUT_PULLUP);
-		pinMode(PIN_BUTTON_2, INPUT_PULLUP);
-		pinMode(PIN_BUTTON_3, INPUT_PULLUP);
-	}
+	//if (ESP12F_RELAY_X4) {
+	//	// On ESP12F_Relay_X4 board the GPIO0 (button 2) has already a pullup resistor and GPIO15 (button 3) a pulldown:
+	//	pinMode(PIN_BUTTON_1, INPUT_PULLUP);
+	//	pinMode(PIN_BUTTON_2, INPUT);
+	//	pinMode(PIN_BUTTON_3, INPUT);
+	//} else {
+	//	pinMode(PIN_BUTTON_1, INPUT_PULLUP);
+	//	pinMode(PIN_BUTTON_2, INPUT_PULLUP);
+	//	pinMode(PIN_BUTTON_3, INPUT_PULLUP);
+	//}
 
 	// detect and check RTC type
 	RTC.detect();
@@ -1111,13 +1111,15 @@ void OpenSprinkler::apply_all_station_bits() {
 
 #if defined(ESP8266)
   if (TORO_RELAY_X8) {
-		// Custom WeMos board with control of relays for stations 1...8 connected to GPIO 16, 14, 12, 13, 15, 2, 0, 4:
-		const uint8_t stationGPIO[] = {16, 15, 14, 12, 13, 4, 2, 0};
+		// Custom WeMos board with control of relays for stations 1...8 connected to GPIO 16, 14, 12, 13, 2, 0, 4, 5:
+		const uint8_t stationGPIO[] = {16, 14, 12, 13, 5, 4, 2, 0};
 		for (uint8_t i = 0; i < 8; i++) {
 			pinMode(stationGPIO[i], OUTPUT);
 			bool isActive = station_bits[0] & (1 << i);
 			digitalWrite(stationGPIO[i], isActive ? HIGH : LOW);
 		}
+	  	pinMode(15, OUTPUT); //Master valve on/off control
+		digitalWrite(15, HIGH);
 		return;
 	}
 
