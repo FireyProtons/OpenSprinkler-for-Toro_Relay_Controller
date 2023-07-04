@@ -24,7 +24,8 @@
 #ifndef _DEFINES_H
 #define _DEFINES_H
 
-#define ESP12F_RELAY_X4 true
+//#define ESP12F_RELAY_X4 true
+#define TORO_RELAY_X8 true
 #define IGNORE_CURR true
 #define BUTTON_3_PULLDOWN true
 
@@ -378,7 +379,9 @@ enum {
 	#define V2_PIN_LATCH_COMK    IOEXP_PIN+15 // latch COM- (cathode)
 	#define V2_PIN_SENSOR1       3  // sensor 1
 	#define V2_PIN_SENSOR2       10 // sensor 2
-
+	#ifdef TORO_RELAY_X8
+		#define MAIN_ON_OFF    15
+	#endif
 #elif defined(OSPI) // for OSPi
 
 	#define OS_HW_VERSION    OSPI_HW_VERSION_BASE
