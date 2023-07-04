@@ -1118,8 +1118,8 @@ void OpenSprinkler::apply_all_station_bits() {
 			bool isActive = station_bits[0] & (1 << i);
 			digitalWrite(stationGPIO[i], isActive ? HIGH : LOW);
 		}
-	  	pinMode(15, OUTPUT); //Master valve on/off control
-		digitalWrite(15, HIGH);
+	  	pinMode(MAIN_ON_OFF, OUTPUT); //Master valve on/off control GPIO15
+		digitalWrite(MAIN_ON_OFF, HIGH);
 		return;
 	}
 
