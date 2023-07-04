@@ -1110,10 +1110,10 @@ void OpenSprinkler::latch_apply_all_station_bits() {
 void OpenSprinkler::apply_all_station_bits() {
 
 #if defined(ESP8266)
-  if (ESP12F_RELAY_X4) {
-		// On the ESP12F_Relay_X4 board the relays for station 1...4 are connected to GPIO 16, 14, 12 and 13:
-		const uint8_t stationGPIO[] = {16, 14, 12, 13};
-		for (uint8_t i = 0; i < 4; i++) {
+  if (TORO_RELAY_X8) {
+		// Custom WeMos board with control of relays for stations 1...8 connected to GPIO 16, 14, 12, 13, 15, 2, 0, 4:
+		const uint8_t stationGPIO[] = {16, 15, 14, 12, 13, 4, 2, 0};
+		for (uint8_t i = 0; i < 8; i++) {
 			pinMode(stationGPIO[i], OUTPUT);
 			bool isActive = station_bits[0] & (1 << i);
 			digitalWrite(stationGPIO[i], isActive ? HIGH : LOW);
